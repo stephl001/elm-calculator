@@ -5,3 +5,4 @@ repl-temp-*
 
 # Do not push main js to git
 *.js
+.ionide/symbolCache.db
