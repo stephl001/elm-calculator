@@ -19,9 +19,15 @@ import Html.Events exposing (onClick)
    1- Nombre de caractères numériques (0-9 et . ) affichés: 10
        ex: 87.882 (6 caractères), 90 (2 caractères), 82.9288273 (10 caractères)
    2- Priorité d'opération (4 + 5 * 2 + 3 = 17)
-   3- Il doit y avoir un bouton C qui reset la calculatrice à son état initial
-   4-
+   3- Il doit y avoir un bouton DEL qui reset la calculatrice à son état initial
+   4- Bonus: Calcul des pourcentage!
 -}
+
+
+maxNumberLength : Int
+maxNumberLength =
+    7
+
 
 type BinaryOperator
     = Plus
@@ -52,7 +58,7 @@ multiplyOperator =
 
 divideOperator : AssociativeOperator
 divideOperator =
-    RightAssociative Plus
+    RightAssociative Divide
 
 
 extractOperator : AssociativeOperator -> BinaryOperator
@@ -134,8 +140,8 @@ pushOperator inputNumber operator expr =
 
         RightAssociative op ->
             case expr of
-                Number nb ->
-                    toPartialOperation nb
+                Number _ ->
+                    toPartialOperation inputNumber
 
                 BinaryOperation oper n rightExpr ->
                     pushOperator inputNumber operator rightExpr |> BinaryOperation oper n
@@ -279,7 +285,7 @@ update msg model =
             in
             case model.input of
                 Editing str ->
-                    if String.length str == 10 then
+                    if String.length str == maxNumberLength then
                         model
 
                     else
@@ -305,6 +311,16 @@ update msg model =
                         model |> updateInput chStr
 
 
+truncateFloat : Int -> Float -> String
+truncateFloat maxLength =
+    String.fromFloat >> String.left maxLength
+
+
+toDisplayableFloat : Float -> String
+toDisplayableFloat =
+    truncateFloat 15
+
+
 textFromModel : Model -> String
 textFromModel model =
     case model.input of
@@ -312,10 +328,10 @@ textFromModel model =
             str
 
         Fixed nb ->
-            String.fromFloat nb
+            toDisplayableFloat nb
 
         Uninitialized ->
-            evaluate model.expression |> String.fromFloat
+            evaluate model.expression |> toDisplayableFloat
 
 
 btnOperator : AssociativeOperator -> Char -> Html Msg
