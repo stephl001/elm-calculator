@@ -1,0 +1,28 @@
+{
+  "name": "elm-calculator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "calculator.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "npx parcel public/index.html",
+    "watch": "npx parcel watch public/index.html",
+    "build": "npx parcel build public/index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stephl001/elm-calculator.git"
+  },
+  "keywords": [],
+  "author": "Stephane Larocque",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/stephl001/elm-calculator/issues"
+  },
+  "homepage": "https://github.com/stephl001/elm-calculator#readme",
+  "devDependencies": {
+    "elm-hot": "^1.1.2",
+    "node-elm-compiler": "^5.0.4",
+    "parcel-bundler": "^1.12.3"
+  }
+}

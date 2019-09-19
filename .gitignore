@@ -3,6 +3,8 @@ elm-stuff
 # elm-repl generated files
 repl-temp-*
 
-# Do not push main js to git
-*.js
-.ionide/symbolCache.db
+node_modules
+
+dist
+.ionide
+.cache
